@@ -1,7 +1,7 @@
 ## Credits
 * Derived from: https://github.com/crystal-bit/godot-game-template/tree/godot-3
-* https://www.kenney.nl/assets/input-prompts
-* https://www.kenney.nl/assets/particle-pack
+* Code by Josep Valls
+* visual and sound assets are not included due to copyright and distribution restrictions
 
 <p>
 <a href="https://godotengine.org/download">
