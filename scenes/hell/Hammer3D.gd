@@ -1,0 +1,21 @@
+extends Spatial
+
+export (String, FILE) var sound
+
+func pre_beat():
+	pass
+		
+func post_beat():
+	pass
+
+
+func beat():
+	if sound:
+		Game.play_sfx(sound)
+		
+	var tween = create_tween()
+	tween.set_trans(Tween.TRANS_CUBIC)
+	tween.set_ease(Tween.EASE_IN)
+	tween.tween_property($Hammer, "rotation_degrees", Vector3(0,0,85), 0.2)
+	tween.set_ease(Tween.EASE_IN_OUT)
+	tween.tween_property($Hammer, "rotation_degrees", Vector3.ZERO, 2.0).set_delay(0.2)

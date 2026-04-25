@@ -1,0 +1,186 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://assets/ui-theme.tres" type="Theme" id=3]
+
+[sub_resource type="GDScript" id=1]
+script/source = "extends Control
+
+
+func _ready():
+	title = \"Leaderboard\"
+	$Title.text = title
+	Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
+	$PlayButton1.connect(\"pressed\", self, \"end_stage\")
+	$\"%Submit\".connect(\"pressed\", self, \"submit_score\")
+	$\"%Discard\".connect(\"pressed\", $FinalLayer, \"hide\")
+	#GameManager.get_scores()
+	$Refreshing.hide()
+	if GameManager.final_score_available and not GameManager.final_score_submitted:
+		$FinalLayer/VBoxOptions/LineEdit.text = Game.settings.player_name
+		$FinalLayer/VBoxOptions/Score.text = str(GameManager.get_final_score())
+		$FinalLayer.show()
+	else:
+		$FinalLayer.hide()
+		
+
+func submit_score():
+	var player_name = $FinalLayer/VBoxOptions/LineEdit.text
+	Game.settings.set_player_name(player_name)
+	Game.write_settings()
+	GameManager.final_score_submission()
+	$FinalLayer.hide()
+	Game.play_sfx(\"res://assets/sfx/BOSS PROJECTILE SHOOT_1A_TS.wav\")
+	GameManager.get_scores()
+	$Refreshing.show()
+	
+
+func _process(delta):
+	$RichTextLabel.bbcode_text = GameManager.get_scores_cache
+	
+var current_text = 0
+export(String) var title = \"\"
+export(Array, String) var text = [\"\"]
+export(String) var next_scene = null
+export(String) var display = \"\"
+export(int) var next_slide = 0
+
+func end_stage():
+	Game.play_sfx(\"res://assets/sfx/BOSS PROJECTILE SHOOT_1A_TS.wav\")
+	Game.change_scene(\"res://scenes/menu/menu.tscn\", {})
+"
+
+[node name="Leaderboard" type="Control"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+theme = ExtResource( 3 )
+script = SubResource( 1 )
+__meta__ = {
+"_edit_lock_": true,
+"_edit_use_anchors_": false
+}
+
+[node name="ColorRect" type="ColorRect" parent="."]
+anchor_right = 1.0
+anchor_bottom = 1.0
+color = Color( 0.133333, 0, 0.466667, 1 )
+
+[node name="Title" type="Label" parent="."]
+margin_left = 64.0
+margin_top = 64.0
+margin_right = 960.0
+margin_bottom = 256.0
+text = "Cancrorum Theta"
+uppercase = true
+
+[node name="Refreshing" type="Label" parent="."]
+visible = false
+margin_left = 760.0
+margin_top = 432.0
+margin_right = 960.0
+margin_bottom = 626.0
+custom_colors/font_color = Color( 1, 1, 1, 1 )
+text = "Refreshing leaderboard..."
+align = 3
+autowrap = true
+
+[node name="PlayButton1" type="Button" parent="."]
+margin_left = 760.0
+margin_top = 512.0
+margin_right = 960.0
+margin_bottom = 552.0
+rect_min_size = Vector2( 200, 40 )
+text = "Main menu"
+
+[node name="RichTextLabel" type="RichTextLabel" parent="."]
+margin_top = 128.0
+margin_right = 768.0
+margin_bottom = 600.0
+bbcode_enabled = true
+bbcode_text = "
+
+
+
+
+
+[center]Loading leaderboard...[/center]"
+text = "
+
+
+
+
+
+Loading leaderboard..."
+
+[node name="FinalLayer" type="Control" parent="."]
+anchor_right = 1.0
+anchor_bottom = 1.0
+theme = ExtResource( 3 )
+
+[node name="ColorRect" type="ColorRect" parent="FinalLayer"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+color = Color( 0.243137, 0.211765, 0.290196, 0.768627 )
+
+[node name="ColorRect2" type="ColorRect" parent="FinalLayer"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 240.0
+margin_top = 186.0
+margin_right = -240.0
+margin_bottom = -24.0
+color = Color( 0.45098, 0.517647, 0.929412, 1 )
+
+[node name="VBoxOptions" type="VBoxContainer" parent="FinalLayer"]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -256.0
+margin_top = -100.0
+margin_right = 256.0
+margin_bottom = 205.0
+custom_constants/separation = 20
+alignment = 1
+
+[node name="Label" type="Label" parent="FinalLayer/VBoxOptions"]
+margin_top = 22.0
+margin_right = 512.0
+margin_bottom = 45.0
+text = "Your final score"
+align = 1
+
+[node name="Score" type="Label" parent="FinalLayer/VBoxOptions"]
+margin_top = 65.0
+margin_right = 512.0
+margin_bottom = 88.0
+text = "00:00:00"
+align = 1
+
+[node name="Label2" type="Label" parent="FinalLayer/VBoxOptions"]
+margin_top = 108.0
+margin_right = 512.0
+margin_bottom = 131.0
+text = "Your name"
+align = 1
+
+[node name="LineEdit" type="LineEdit" parent="FinalLayer/VBoxOptions"]
+margin_top = 151.0
+margin_right = 512.0
+margin_bottom = 184.0
+text = "Anonymous"
+max_length = 10
+clear_button_enabled = true
+
+[node name="Submit" type="Button" parent="FinalLayer/VBoxOptions"]
+unique_name_in_owner = true
+margin_top = 204.0
+margin_right = 512.0
+margin_bottom = 233.0
+text = "Submit"
+
+[node name="Discard" type="Button" parent="FinalLayer/VBoxOptions"]
+unique_name_in_owner = true
+margin_top = 253.0
+margin_right = 512.0
+margin_bottom = 282.0
+text = "Discard"

@@ -1,0 +1,235 @@
+[gd_resource type="ShaderMaterial" load_steps=9 format=2]
+
+[ext_resource path="res://addons/FancyGradient/RepeatingGradient.gd" type="Script" id=1]
+[ext_resource path="res://assets/sprites/cards/card_back_face_normal.png" type="Texture" id=2]
+
+[sub_resource type="Shader" id=1]
+code = "shader_type canvas_item;
+
+uniform vec2 mouse_position;
+uniform vec2 sprite_position;
+
+uniform float round_speed : hint_range(0, 1) = 1.;
+uniform float round_intensity : hint_range(0, 1) = 1.;
+
+uniform float fov : hint_range(1, 179) = 90;
+uniform bool cull_back = true;
+//uniform float y_rot : hint_range(-180, 180) = 0.0; From original shader -- https://godotshaders.com/shader/2d-perspective/
+//uniform float x_rot : hint_range(-180, 180) = 0.0;
+//Amount to inset the image by, a higher value means the image is smaller but less likely to go outside of the \"bounds\" of the original sprite size.
+uniform float inset : hint_range(0, 1) = 0.0;
+//Max tilt. 2 means the sprite goes all the way to one side, and the plane is parrelel to the 2d camera.
+uniform float max_tilt : hint_range(0,2.0) = 1.0;
+//the Max distance from the center of the sprite that results in the max tilt.
+uniform float max_distance = 500.0;
+
+varying flat vec2 o;
+varying vec3 p;
+
+//The color of the foil.
+uniform vec4 foilcolor : hint_color;
+uniform float threshold : hint_range(0.0, 2.0, 0.1) = 0.1 ;
+uniform float fuzziness : hint_range(0.0,1.0,.01) = 0.1;
+uniform float period = 1;
+uniform float scroll = 1;
+uniform float normal_strength = .1;
+uniform float effect_alpha_mult : hint_range(0,1) = 1.0;
+uniform float direction : hint_range(0,1.0) = 0.5;
+
+uniform sampler2D foil_mask;
+uniform sampler2D gradient;
+uniform sampler2D noise;
+uniform sampler2D normal_map;
+
+uniform vec4 glass_color: hint_color = vec4(1.0);
+
+varying smooth vec2 direction_to;
+varying smooth vec2 passthrough;
+
+float inverse_lerp(float v, float a, float b){
+	return (v - a) / (b - a);
+}
+
+float color_mask(vec3 mask, vec3 color, float mask_threshold, float mask_fuzziness){
+	float d = distance(mask,color);
+	return clamp(1.0 - smoothstep(mask_threshold,mask_threshold + mask_fuzziness, d),0.0,1.0);
+}
+
+mat2 rotate2d(float _angle){
+    return mat2(vec2(cos(_angle),-sin(_angle)),vec2(sin(_angle),cos(_angle)));
+}
+
+vec3 rotate_vector(vec3 v, float angleX, float angleY, float magnitude) {
+	// Create rotation matrices for X and Y axes.
+	mat3 rotX = mat3(
+		vec3(1.0, 0.0, 0.0),
+		vec3(0.0, cos(angleX), -sin(angleX)),
+		vec3(0.0, sin(angleX), cos(angleX))
+	);
+	mat3 rotY = mat3(
+		vec3(cos(angleY), 0.0, sin(angleY)),
+		vec3(0.0, 1.0, 0.0),
+		vec3(-sin(angleY), 0.0, cos(angleY))
+	);
+	// Combine the rotations. Order matters! Y then X is common.
+	mat3 combinedRotation = rotX * rotY; // Apply Y rotation first, then X.
+	// Rotate the vector.
+	vec3 rotatedVector = combinedRotation * v;
+	// Apply magnitude
+	rotatedVector = normalize(rotatedVector) * magnitude;
+	return rotatedVector;
+}
+
+const float PI = 3.14159265359;
+
+void vertex(){
+	direction_to = mouse_position - sprite_position;
+	float d = length( direction_to );
+	float magnitude = min( max_tilt , d / max_distance);
+	float angle = atan(direction_to.x,direction_to.y);
+	float x_rota = abs(angle) / PI;
+	float y_rota = abs(atan(direction_to.y,direction_to.x)) / PI;
+	
+	float sin_b = sin( (-y_rota + .5) * magnitude * (PI / 2.0) );
+	float cos_b = cos( (-y_rota + .5) * magnitude * (PI / 2.0) );
+	float sin_c = sin( (x_rota - .5) * magnitude * (PI / 2.0) );
+	float cos_c = cos( (x_rota - .5) * magnitude * (PI / 2.0) );
+	
+	mat3 inv_rot_mat;
+	inv_rot_mat[0][0] = cos_b;
+	inv_rot_mat[0][1] = 0.0;
+	inv_rot_mat[0][2] = -sin_b;
+	
+	inv_rot_mat[1][0] = sin_b * sin_c;
+	inv_rot_mat[1][1] = cos_c;
+	inv_rot_mat[1][2] = cos_b * sin_c;
+	
+	inv_rot_mat[2][0] = sin_b * cos_c;
+	inv_rot_mat[2][1] = -sin_c;
+	inv_rot_mat[2][2] = cos_b * cos_c;
+	
+	
+	float t = tan(fov / 360.0 * PI);
+	p = inv_rot_mat * vec3((UV - 0.5), 0.5 / t);
+	float v = (0.5 / t) + 0.5;
+	p.xy *= v * inv_rot_mat[2].z;
+	o = v * inv_rot_mat[2].xy;
+
+	VERTEX += (UV - 0.5) / TEXTURE_PIXEL_SIZE * t * (1.0 - inset);
+}
+
+vec4 effect(sampler2D tex, vec2 texture_coords) {
+	vec4 texel = texture(tex, texture_coords);
+	vec2 uv = texture_coords;
+
+	vec2 adjusted_uv = uv - vec2(0.5, 0.5);
+	
+	float low = min(texel.r, min(texel.g, texel.b));
+    float high = max(texel.r, max(texel.g, texel.b));
+	float delta = min(high, max(0.5, 1. - low));
+	
+	vec2 foil = vec2(TIME / (1. / round_speed), 0.0);
+	
+	float fac = max(min(2. * sin((length(90. * adjusted_uv) + foil.r * 2.) + 3. * (1. + 0.8 * cos(length(113.1121 * adjusted_uv) - foil.r * 3.121))) - 1. - max(5. - length(90. * adjusted_uv), 0.), 1.), 0.);
+	vec2 rotater = vec2(cos(foil.r * 0.1221), sin(foil.r * 0.3512));
+	float angle = dot(rotater, adjusted_uv) / (length(rotater) * length(adjusted_uv));
+	float fac2 = max(min(5. * cos(foil.g * 0.3 + angle * 3.14*(2.2 + 0.9*sin(foil.r * 1.65 + 0.2 * foil.g))) - 4. - max(2.-length(20.*adjusted_uv), 0.), 1.), 0.);
+	float fac3 = 0.3 * max(min(2. * sin(foil.r * 5. + uv.x * 3. + 3. * (1. + 0.5 * cos(foil.r * 7.))) - 1., 1.), -1.);
+	float fac4 = 0.3 * max(min(2. * sin(foil.r * 6.66 + uv.y * 3.8 + 3. * (1. + 0.5 * cos(foil.r * 3.414))) - 1., 1.), -1.);
+
+	float maxfac = max(max(fac, max(fac2, max(fac3, max(fac4, 0.0)))) + 2.2 * (fac + fac2 + fac3 + fac4), 0.);
+
+	//texel.r = texel.r - delta + delta * maxfac * 0.3;
+	//texel.g = texel.g - delta + delta * maxfac * 0.3;
+	//texel.b = texel.b + delta * maxfac * 1.9;
+	//texel.a = min(texel.a, 0.3 * texel.a + 0.9 * min(0.5, maxfac * 0.1));
+	texel.a = maxfac;
+
+	return texel;
+}
+
+
+void fragment() {
+	//culls the back somehow
+	if (cull_back && p.z <= 0.0) discard;
+	//get the UV from based on the tilt from the vertex function
+	vec2 uv = (p.xy / p.z).xy - o;
+	vec2 adjusted_uv = uv + 0.5;
+	//get the color texture
+	vec4 albedo_tex = texture(TEXTURE, adjusted_uv);
+	COLOR = albedo_tex;
+	
+	vec4 mask = texture(foil_mask,adjusted_uv);
+	float texture_similarity = color_mask(foilcolor.rgb,albedo_tex.rgb,threshold,fuzziness);
+	
+	float d = length( direction_to );
+	float magnitude = min( max_tilt , d / max_distance);
+	float angle = atan(direction_to.x,direction_to.y);
+	float x_rota = abs(angle) / PI;
+	float y_rota = abs(atan(direction_to.y,direction_to.x)) / PI;
+	
+	vec3 normal_map_tex = texture(normal_map,adjusted_uv).rgb * 2.0 - 1.0;
+	vec3 normal = rotate_vector(vec3(1.0,1.0,1.0),x_rota,y_rota,magnitude * magnitude);
+	normal = rotate_vector(normal,normal_map_tex.x, normal_map_tex.y, length(normal_map_tex)) * normal_strength;
+	
+	vec4 noise_tex = texture(noise,adjusted_uv);
+	
+	vec2 gradiant_sample = vec2((0.25+(normal.y*direction*2.0-normal.x*(1.0-direction)*2.0)/2.0+(uv.y*direction+uv.x*(1.0-direction))/2.0), 0.0);
+	gradiant_sample += vec2(magnitude,0.0) * scroll;
+	gradiant_sample = mod((gradiant_sample+adjusted_uv * period),1.0);
+	vec4 gradient_tex = texture(gradient, gradiant_sample);
+	float strength = effect_alpha_mult * mask.r * texture_similarity;
+	
+	COLOR.rgb = mix(albedo_tex.rgb, gradient_tex.rgb*(noise_tex.rgb*2.0), strength);//(effect_alpha_mult-length(albedo_tex))*gradient_tex.a*effect_alpha_mult);
+	COLOR.a *= step(max(abs(uv.x), abs(uv.y)), 0.5);
+	COLOR.rgb = mix(COLOR.rgb, COLOR.rgb * effect(TEXTURE, UV.xy).a, round_intensity) ;
+	COLOR = mix(COLOR, glass_color*COLOR, texture_similarity);
+	//COLOR.rgb = min(COLOR.rgb, texture(TEXTURE, UV).rgb) ;
+}"
+
+[sub_resource type="Gradient" id=14]
+colors = PoolColorArray( 1, 1, 1, 0, 0.371094, 0.931828, 1, 1 )
+
+[sub_resource type="Gradient" id=15]
+offsets = PoolRealArray( 0, 0.5, 0.5, 1 )
+colors = PoolColorArray( 1, 1, 1, 0, 0.371094, 0.931828, 1, 1, 0.371094, 0.931828, 1, 1, 1, 1, 1, 0 )
+script = ExtResource( 1 )
+repetitions = 1
+gradient = SubResource( 14 )
+repeat_back_to_back = true
+
+[sub_resource type="GradientTexture2D" id=16]
+gradient = SubResource( 15 )
+width = 128
+height = 1
+
+[sub_resource type="Gradient" id=19]
+colors = PoolColorArray( 1, 1, 1, 1, 1, 1, 1, 1 )
+
+[sub_resource type="GradientTexture2D" id=27]
+gradient = SubResource( 19 )
+fill_to = Vector2( 0, 1 )
+
+[resource]
+shader = SubResource( 1 )
+shader_param/mouse_position = Vector2( 600, 0 )
+shader_param/sprite_position = null
+shader_param/round_speed = 1.0
+shader_param/round_intensity = 0.0
+shader_param/fov = 5.0
+shader_param/cull_back = true
+shader_param/inset = 0.0
+shader_param/max_tilt = 0.5
+shader_param/max_distance = 500.0
+shader_param/foilcolor = Color( 0.980392, 0.898039, 0.756863, 1 )
+shader_param/threshold = 0.2
+shader_param/fuzziness = 0.5
+shader_param/period = 1.0
+shader_param/scroll = 3.0
+shader_param/normal_strength = -1.0
+shader_param/effect_alpha_mult = 1.0
+shader_param/direction = 0.5
+shader_param/glass_color = Color( 0.560784, 0.898039, 1, 0.25098 )
+shader_param/gradient = SubResource( 16 )
+shader_param/noise = SubResource( 27 )
+shader_param/normal_map = ExtResource( 2 )

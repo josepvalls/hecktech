@@ -1,0 +1,601 @@
+[gd_scene load_steps=47 format=2]
+
+[ext_resource path="res://scenes/hell/SequenceFactory.gd" type="Script" id=1]
+[ext_resource path="res://assets/hell/ghost0004.png" type="Texture" id=2]
+[ext_resource path="res://assets/hell/bloodhammer.png" type="Texture" id=3]
+[ext_resource path="res://assets/hell/ghost0005.png" type="Texture" id=4]
+[ext_resource path="res://assets/hell/ghost0003.png" type="Texture" id=5]
+[ext_resource path="res://assets/hell/ghost0002.png" type="Texture" id=6]
+[ext_resource path="res://assets/hell/ghost0001.png" type="Texture" id=7]
+[ext_resource path="res://assets/hell/ghost0011.png" type="Texture" id=8]
+[ext_resource path="res://assets/hell/ghost0010.png" type="Texture" id=9]
+[ext_resource path="res://assets/hell/ghost0009.png" type="Texture" id=10]
+[ext_resource path="res://assets/hell/ghost0008.png" type="Texture" id=11]
+[ext_resource path="res://assets/hell/ghost0006.png" type="Texture" id=12]
+[ext_resource path="res://assets/hell/ghost0007.png" type="Texture" id=13]
+[ext_resource path="res://assets/hell/ghost0012.png" type="Texture" id=14]
+[ext_resource path="res://assets/sprites/shapes/Circle.png" type="Texture" id=15]
+[ext_resource path="res://scenes/hell/Imp.tscn" type="PackedScene" id=16]
+[ext_resource path="res://scenes/hell/Hammer3D.gd" type="Script" id=17]
+[ext_resource path="res://scenes/hell/Conveyor.tscn" type="PackedScene" id=18]
+
+[sub_resource type="SpatialMaterial" id=29]
+albedo_color = Color( 0.952941, 0.388235, 0.388235, 1 )
+
+[sub_resource type="PlaneMesh" id=30]
+material = SubResource( 29 )
+size = Vector2( 32, 32 )
+
+[sub_resource type="SpatialMaterial" id=31]
+albedo_color = Color( 0.478431, 0.0745098, 0.0745098, 1 )
+
+[sub_resource type="PlaneMesh" id=32]
+material = SubResource( 31 )
+size = Vector2( 48, 48 )
+
+[sub_resource type="SpatialMaterial" id=33]
+albedo_color = Color( 0.376471, 0.254902, 0.180392, 1 )
+
+[sub_resource type="PlaneMesh" id=15]
+material = SubResource( 33 )
+size = Vector2( 32, 8 )
+
+[sub_resource type="SpatialMaterial" id=34]
+albedo_color = Color( 0.372549, 0.141176, 0, 1 )
+
+[sub_resource type="PlaneMesh" id=35]
+material = SubResource( 34 )
+size = Vector2( 48, 16 )
+
+[sub_resource type="SpatialMaterial" id=7]
+albedo_color = Color( 0.509804, 0.701961, 0.929412, 1 )
+
+[sub_resource type="PlaneMesh" id=8]
+material = SubResource( 7 )
+size = Vector2( 2, 32 )
+
+[sub_resource type="SpatialMaterial" id=19]
+albedo_color = Color( 0.670588, 0.0352941, 0.333333, 1 )
+
+[sub_resource type="PlaneMesh" id=20]
+material = SubResource( 19 )
+size = Vector2( 2, 32 )
+
+[sub_resource type="Environment" id=2]
+ambient_light_color = Color( 0.670588, 0.670588, 0.670588, 1 )
+ambient_light_energy = 0.5
+glow_intensity = 1.0
+glow_bloom = 0.12
+glow_blend_mode = 0
+glow_bicubic_upscale = true
+
+[sub_resource type="SpriteFrames" id=6]
+animations = [ {
+"frames": [ ExtResource( 7 ), ExtResource( 6 ), ExtResource( 5 ), ExtResource( 2 ), ExtResource( 4 ), ExtResource( 12 ), ExtResource( 13 ), ExtResource( 11 ), ExtResource( 10 ), ExtResource( 9 ), ExtResource( 8 ), ExtResource( 14 ) ],
+"loop": true,
+"name": "default",
+"speed": 12.0
+} ]
+
+[sub_resource type="SpatialMaterial" id=16]
+albedo_color = Color( 0.592157, 0.694118, 0.447059, 1 )
+
+[sub_resource type="CubeMesh" id=28]
+material = SubResource( 16 )
+size = Vector3( 0.8, 2, 2 )
+
+[sub_resource type="SpatialMaterial" id=26]
+flags_transparent = true
+albedo_color = Color( 0.588235, 1, 0, 0.25098 )
+
+[sub_resource type="CubeMesh" id=27]
+material = SubResource( 26 )
+size = Vector3( 0.8, 2, 4 )
+
+[sub_resource type="SpatialMaterial" id=9]
+albedo_color = Color( 0.0666667, 0.494118, 0.807843, 1 )
+
+[sub_resource type="CubeMesh" id=10]
+material = SubResource( 9 )
+size = Vector3( 1.8, 2, 2 )
+
+[sub_resource type="SpatialMaterial" id=11]
+albedo_color = Color( 0.384314, 0.0666667, 0.807843, 1 )
+
+[sub_resource type="CubeMesh" id=12]
+material = SubResource( 11 )
+size = Vector3( 0.8, 2, 2 )
+
+[sub_resource type="CubeMesh" id=17]
+material = SubResource( 16 )
+size = Vector3( 1.8, 2, 2 )
+
+[sub_resource type="SpatialMaterial" id=13]
+albedo_color = Color( 0.0666667, 0.772549, 0.807843, 1 )
+
+[sub_resource type="CubeMesh" id=14]
+material = SubResource( 13 )
+size = Vector3( 3.8, 2, 2 )
+
+[sub_resource type="SphereMesh" id=18]
+radius = 0.5
+height = 1.0
+
+[sub_resource type="StyleBoxEmpty" id=23]
+
+[sub_resource type="StyleBoxEmpty" id=24]
+
+[node name="SpatialConveyors" type="Spatial"]
+script = ExtResource( 1 )
+
+[node name="Plane" type="MeshInstance" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.1, -16 )
+mesh = SubResource( 30 )
+skeleton = NodePath("../WorldEnvironment")
+
+[node name="Plane5" type="MeshInstance" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.2, -16 )
+mesh = SubResource( 32 )
+skeleton = NodePath("../WorldEnvironment")
+
+[node name="Plane4" type="MeshInstance" parent="."]
+transform = Transform( 1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, -0.1, -32 )
+mesh = SubResource( 15 )
+skeleton = NodePath("../WorldEnvironment")
+
+[node name="Plane6" type="MeshInstance" parent="."]
+transform = Transform( 1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, -0.1, -41 )
+mesh = SubResource( 35 )
+skeleton = NodePath("../WorldEnvironment")
+
+[node name="Plane2" type="MeshInstance" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -13, 0, -16 )
+mesh = SubResource( 8 )
+skeleton = NodePath("../WorldEnvironment")
+
+[node name="Plane3" type="MeshInstance" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 12, 0, -16 )
+mesh = SubResource( 20 )
+skeleton = NodePath("../WorldEnvironment")
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource( 2 )
+
+[node name="Camera" type="Camera" parent="."]
+transform = Transform( 1, 0, 0, 0, 0.901885, 0.431976, 0, -0.431976, 0.901885, 0, 11.9653, 16.1435 )
+current = true
+fov = 35.0
+
+[node name="Camera2" type="Camera" parent="."]
+transform = Transform( 1, 0, 0, 0, 0.982958, 0.183831, 0, -0.183831, 0.982958, 0, 8.96534, 28.1435 )
+fov = 25.0
+
+[node name="Camera3" type="Camera" parent="."]
+transform = Transform( 1, 0, 0, 0, 0.901885, 0.431976, 0, -0.431976, 0.901885, 0, 8.96534, 7.14345 )
+
+[node name="Conveyor" parent="." instance=ExtResource( 18 )]
+
+[node name="Spirit" type="Spatial" parent="."]
+transform = Transform( 0.25, 0, 0, 0, 0.25, 0, 0, 0, 0.25, 0, 1.5, 0.5 )
+
+[node name="Sprite3D" type="Sprite3D" parent="Spirit"]
+transform = Transform( 0.654779, 0, 0, 0, 0.654779, 0, 0, 0, 1, 0.0451832, -0.135552, 0 )
+shaded = true
+alpha_cut = 2
+texture = ExtResource( 15 )
+
+[node name="AnimatedSprite3D" type="AnimatedSprite3D" parent="Spirit"]
+transform = Transform( 2, 0, 0, 0, 2, 0, 0, 0, 2, -0.5648, 0.768127, 0.162891 )
+frames = SubResource( 6 )
+playing = true
+
+[node name="Spirit2" type="Spatial" parent="."]
+transform = Transform( 0.25, 0, 0, 0, 0.25, 0, 0, 0, 0.25, 0, 1.5, -7.5 )
+
+[node name="Sprite3D" type="Sprite3D" parent="Spirit2"]
+transform = Transform( 0.654779, 0, 0, 0, 0.654779, 0, 0, 0, 1, 0.0451832, -0.135552, 0 )
+shaded = true
+alpha_cut = 2
+texture = ExtResource( 15 )
+
+[node name="AnimatedSprite3D" type="AnimatedSprite3D" parent="Spirit2"]
+transform = Transform( 2, 0, 0, 0, 2, 0, 0, 0, 2, -0.5648, 0.768127, 0.162891 )
+frames = SubResource( 6 )
+playing = true
+
+[node name="Spirit3" type="Spatial" parent="."]
+transform = Transform( 0.25, 0, 0, 0, 0.25, 0, 0, 0, 0.25, 0, 1.5, -16.5 )
+
+[node name="Sprite3D" type="Sprite3D" parent="Spirit3"]
+transform = Transform( 0.654779, 0, 0, 0, 0.654779, 0, 0, 0, 1, 0.0451832, -0.135552, 0 )
+shaded = true
+alpha_cut = 2
+texture = ExtResource( 15 )
+
+[node name="AnimatedSprite3D" type="AnimatedSprite3D" parent="Spirit3"]
+transform = Transform( 2, 0, 0, 0, 2, 0, 0, 0, 2, -0.5648, 0.768127, 0.162891 )
+frames = SubResource( 6 )
+playing = true
+
+[node name="Spirit4" type="Spatial" parent="."]
+transform = Transform( 0.25, 0, 0, 0, 0.25, 0, 0, 0, 0.25, 0, 1.5, -23.5 )
+
+[node name="Sprite3D" type="Sprite3D" parent="Spirit4"]
+transform = Transform( 0.654779, 0, 0, 0, 0.654779, 0, 0, 0, 1, 0.0451832, -0.135552, 0 )
+shaded = true
+alpha_cut = 2
+texture = ExtResource( 15 )
+
+[node name="AnimatedSprite3D" type="AnimatedSprite3D" parent="Spirit4"]
+transform = Transform( 2, 0, 0, 0, 2, 0, 0, 0, 2, -0.5648, 0.768127, 0.162891 )
+frames = SubResource( 6 )
+playing = true
+
+[node name="Hammer" type="Spatial" parent="."]
+transform = Transform( 0.433013, 0, -0.25, 0, 0.5, 0, 0.25, 0, 0.433013, 3, 1, 2 )
+visible = false
+script = ExtResource( 17 )
+
+[node name="Hammer" type="Spatial" parent="Hammer"]
+
+[node name="OmniLight" type="OmniLight" parent="Hammer/Hammer"]
+transform = Transform( 1.73205, 0, 1, 0, 2, 0, -1, 0, 1.73205, -2.60161, 7.06958, -0.506119 )
+light_color = Color( 0.741176, 0.286275, 0.282353, 1 )
+shadow_enabled = true
+
+[node name="Sprite3D" type="Sprite3D" parent="Hammer/Hammer"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 6.3278, 0 )
+shaded = true
+texture = ExtResource( 3 )
+
+[node name="DirectionalLight" type="DirectionalLight" parent="."]
+transform = Transform( 0.965926, 0.0669873, -0.25, 0, 0.965926, 0.258819, 0.258819, -0.25, 0.933013, 0, 11, 0 )
+
+[node name="CursorMeshInstance2x1" type="Spatial" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -10, 1, -17 )
+
+[node name="Mesh" type="MeshInstance" parent="CursorMeshInstance2x1"]
+mesh = SubResource( 28 )
+skeleton = NodePath("../..")
+
+[node name="TrackMeshInstance2x1" type="MeshInstance" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -1 )
+visible = false
+mesh = SubResource( 27 )
+
+[node name="Machines" type="Spatial" parent="."]
+visible = false
+
+[node name="MeshInstance2x2a8" type="MeshInstance" parent="Machines"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 6, 1, -26 )
+mesh = SubResource( 10 )
+skeleton = NodePath("../..")
+
+[node name="MeshInstance2x1a11" type="MeshInstance" parent="Machines"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 4.5, 1, -26 )
+mesh = SubResource( 12 )
+skeleton = NodePath("../..")
+
+[node name="MeshInstance2x1a12" type="MeshInstance" parent="Machines"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 7.5, 1, -26 )
+mesh = SubResource( 12 )
+skeleton = NodePath("../..")
+
+[node name="MeshInstance2x2a" type="MeshInstance" parent="Machines"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -7, 1, -10 )
+mesh = SubResource( 10 )
+skeleton = NodePath("../..")
+
+[node name="MeshInstance2x2a2" type="MeshInstance" parent="Machines"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -10, 1, -1 )
+mesh = SubResource( 17 )
+skeleton = NodePath("../..")
+
+[node name="MeshInstance2x2a4" type="MeshInstance" parent="Machines"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -10, 1, -9 )
+mesh = SubResource( 17 )
+skeleton = NodePath("../..")
+
+[node name="MeshInstance2x2a9" type="MeshInstance" parent="Machines"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -10, 1, -17 )
+mesh = SubResource( 17 )
+skeleton = NodePath("../..")
+
+[node name="MeshInstance2x2a10" type="MeshInstance" parent="Machines"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -10, 1, -25 )
+mesh = SubResource( 17 )
+skeleton = NodePath("../..")
+
+[node name="MeshInstance2x2a3" type="MeshInstance" parent="Machines"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -3, 1, -10 )
+mesh = SubResource( 10 )
+skeleton = NodePath("../..")
+
+[node name="MeshInstance2x2a5" type="MeshInstance" parent="Machines"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 2, 1, -10 )
+mesh = SubResource( 10 )
+skeleton = NodePath("../..")
+
+[node name="MeshInstance2x4a1" type="MeshInstance" parent="Machines"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -6, 1, -2 )
+mesh = SubResource( 14 )
+skeleton = NodePath("../..")
+
+[node name="MeshInstance2x4a5" type="MeshInstance" parent="Machines"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -6, 1, -18 )
+mesh = SubResource( 14 )
+skeleton = NodePath("../..")
+
+[node name="MeshInstance2x4a6" type="MeshInstance" parent="Machines"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -6, 1, -26 )
+mesh = SubResource( 14 )
+skeleton = NodePath("../..")
+
+[node name="MeshInstance2x4a2" type="MeshInstance" parent="Machines"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -2, 1, -2 )
+mesh = SubResource( 14 )
+skeleton = NodePath("../..")
+
+[node name="MeshInstance2x4a3" type="MeshInstance" parent="Machines"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 2, 1, -18 )
+mesh = SubResource( 14 )
+skeleton = NodePath("../..")
+
+[node name="MeshInstance2x4a4" type="MeshInstance" parent="Machines"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 12, 1, -2 )
+mesh = SubResource( 14 )
+skeleton = NodePath("../..")
+
+[node name="MeshInstance2x1a2" type="MeshInstance" parent="Machines"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.5, 1, -10 )
+mesh = SubResource( 12 )
+skeleton = NodePath("../..")
+
+[node name="MeshInstance2x1a8" type="MeshInstance" parent="Machines"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -3.5, 1, -18 )
+mesh = SubResource( 12 )
+skeleton = NodePath("../..")
+
+[node name="MeshInstance2x1a9" type="MeshInstance" parent="Machines"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -1.5, 1, -18 )
+mesh = SubResource( 12 )
+skeleton = NodePath("../..")
+
+[node name="MeshInstance2x1a10" type="MeshInstance" parent="Machines"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 7.5, 1, -18 )
+mesh = SubResource( 12 )
+skeleton = NodePath("../..")
+
+[node name="MeshInstance2x1a3" type="MeshInstance" parent="Machines"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 3.5, 1, -10 )
+mesh = SubResource( 12 )
+skeleton = NodePath("../..")
+
+[node name="MeshInstance2x2a6" type="MeshInstance" parent="Machines"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 6, 1, -10 )
+mesh = SubResource( 10 )
+skeleton = NodePath("../..")
+
+[node name="MeshInstance2x1a4" type="MeshInstance" parent="Machines"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 4.5, 1, -10 )
+mesh = SubResource( 12 )
+skeleton = NodePath("../..")
+
+[node name="MeshInstance2x2a7" type="MeshInstance" parent="Machines"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 1, -2 )
+mesh = SubResource( 10 )
+skeleton = NodePath("../..")
+
+[node name="MeshInstance2x1a6" type="MeshInstance" parent="Machines"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 2.5, 1, -2 )
+mesh = SubResource( 12 )
+skeleton = NodePath("../..")
+
+[node name="MeshInstance2x1a7" type="MeshInstance" parent="Machines"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 3.5, 1, -2 )
+mesh = SubResource( 12 )
+skeleton = NodePath("../..")
+
+[node name="MeshInstance2x1a5" type="MeshInstance" parent="Machines"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 9.5, 1, -10 )
+mesh = SubResource( 12 )
+skeleton = NodePath("../..")
+
+[node name="MeshInstance" type="MeshInstance" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -13, 0, 0 )
+mesh = SubResource( 18 )
+
+[node name="MeshInstance2" type="MeshInstance" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -13, 0, -8 )
+mesh = SubResource( 18 )
+
+[node name="MeshInstance3" type="MeshInstance" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -13, 0, -16 )
+mesh = SubResource( 18 )
+
+[node name="MeshInstance4" type="MeshInstance" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -13, 0, -24 )
+mesh = SubResource( 18 )
+
+[node name="MeshInstance5" type="MeshInstance" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -10, 3, 0 )
+mesh = SubResource( 18 )
+
+[node name="MeshInstance6" type="MeshInstance" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -10, 3, -8 )
+mesh = SubResource( 18 )
+
+[node name="MeshInstance7" type="MeshInstance" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -10, 3, -16 )
+mesh = SubResource( 18 )
+
+[node name="MeshInstance8" type="MeshInstance" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -10, 3, -24 )
+mesh = SubResource( 18 )
+
+[node name="MeshInstance9" type="MeshInstance" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -7, 1.5, 0 )
+mesh = SubResource( 18 )
+
+[node name="MeshInstance10" type="MeshInstance" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -7, 1.5, -8 )
+mesh = SubResource( 18 )
+
+[node name="MeshInstance11" type="MeshInstance" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -7, 1.5, -16 )
+mesh = SubResource( 18 )
+
+[node name="MeshInstance12" type="MeshInstance" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -7, 1.5, -24 )
+mesh = SubResource( 18 )
+
+[node name="Imp" parent="." instance=ExtResource( 16 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -8, 0, -3 )
+
+[node name="Imp2" parent="." instance=ExtResource( 16 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -3, 0, -12 )
+
+[node name="Imp3" parent="." instance=ExtResource( 16 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 3, 0, -10 )
+
+[node name="Imp4" parent="." instance=ExtResource( 16 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 5, 0, -16 )
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="MarginContainer" type="MarginContainer" parent="CanvasLayer"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+mouse_filter = 2
+custom_constants/margin_right = 32
+custom_constants/margin_top = 32
+custom_constants/margin_left = 32
+custom_constants/margin_bottom = 32
+
+[node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer/MarginContainer"]
+margin_left = 32.0
+margin_top = 32.0
+margin_right = 1248.0
+margin_bottom = 688.0
+mouse_filter = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="CanvasLayer/MarginContainer/VBoxContainer"]
+margin_right = 1216.0
+margin_bottom = 136.0
+mouse_filter = 2
+
+[node name="PanelContainer" type="PanelContainer" parent="CanvasLayer/MarginContainer/VBoxContainer/HBoxContainer"]
+margin_right = 180.0
+margin_bottom = 136.0
+rect_min_size = Vector2( 180, 120 )
+mouse_filter = 2
+
+[node name="Label" type="Label" parent="CanvasLayer/MarginContainer/VBoxContainer/HBoxContainer/PanelContainer"]
+margin_left = 7.0
+margin_top = 30.0
+margin_right = 173.0
+margin_bottom = 105.0
+text = "Score
+Stats
+etc."
+
+[node name="VSeparator" type="VSeparator" parent="CanvasLayer/MarginContainer/VBoxContainer/HBoxContainer"]
+margin_left = 184.0
+margin_right = 1032.0
+margin_bottom = 136.0
+mouse_filter = 2
+size_flags_horizontal = 3
+custom_styles/separator = SubResource( 23 )
+
+[node name="PanelContainer2" type="PanelContainer" parent="CanvasLayer/MarginContainer/VBoxContainer/HBoxContainer"]
+margin_left = 1036.0
+margin_right = 1216.0
+margin_bottom = 136.0
+rect_min_size = Vector2( 180, 120 )
+mouse_filter = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer/MarginContainer/VBoxContainer/HBoxContainer/PanelContainer2"]
+margin_left = 7.0
+margin_top = 7.0
+margin_right = 173.0
+margin_bottom = 129.0
+
+[node name="Label" type="Label" parent="CanvasLayer/MarginContainer/VBoxContainer/HBoxContainer/PanelContainer2/VBoxContainer"]
+margin_right = 166.0
+margin_bottom = 23.0
+text = "Build"
+
+[node name="Button1" type="Button" parent="CanvasLayer/MarginContainer/VBoxContainer/HBoxContainer/PanelContainer2/VBoxContainer"]
+unique_name_in_owner = true
+margin_top = 27.0
+margin_right = 166.0
+margin_bottom = 56.0
+text = "Medium"
+
+[node name="Button2" type="Button" parent="CanvasLayer/MarginContainer/VBoxContainer/HBoxContainer/PanelContainer2/VBoxContainer"]
+unique_name_in_owner = true
+margin_top = 60.0
+margin_right = 166.0
+margin_bottom = 89.0
+text = "Small"
+
+[node name="Button3" type="Button" parent="CanvasLayer/MarginContainer/VBoxContainer/HBoxContainer/PanelContainer2/VBoxContainer"]
+unique_name_in_owner = true
+margin_top = 93.0
+margin_right = 166.0
+margin_bottom = 122.0
+text = "Large"
+
+[node name="HSeparator" type="HSeparator" parent="CanvasLayer/MarginContainer/VBoxContainer"]
+margin_top = 140.0
+margin_right = 1216.0
+margin_bottom = 532.0
+mouse_filter = 2
+size_flags_vertical = 3
+custom_styles/separator = SubResource( 24 )
+
+[node name="HBoxContainer2" type="HBoxContainer" parent="CanvasLayer/MarginContainer/VBoxContainer"]
+margin_top = 536.0
+margin_right = 1216.0
+margin_bottom = 656.0
+mouse_filter = 2
+
+[node name="PanelContainer" type="PanelContainer" parent="CanvasLayer/MarginContainer/VBoxContainer/HBoxContainer2"]
+margin_right = 180.0
+margin_bottom = 120.0
+rect_min_size = Vector2( 180, 120 )
+mouse_filter = 2
+
+[node name="Label" type="Label" parent="CanvasLayer/MarginContainer/VBoxContainer/HBoxContainer2/PanelContainer"]
+margin_left = 7.0
+margin_top = 22.0
+margin_right = 173.0
+margin_bottom = 97.0
+text = "Play/Pause
+Speed
+etc."
+
+[node name="VSeparator" type="VSeparator" parent="CanvasLayer/MarginContainer/VBoxContainer/HBoxContainer2"]
+margin_left = 184.0
+margin_right = 1216.0
+margin_bottom = 120.0
+mouse_filter = 2
+size_flags_horizontal = 3
+custom_styles/separator = SubResource( 23 )
+
+[node name="PanelContainer2" type="PanelContainer" parent="CanvasLayer/MarginContainer/VBoxContainer/HBoxContainer2"]
+visible = false
+margin_left = 1171.0
+margin_right = 1280.0
+margin_bottom = 89.0
+rect_min_size = Vector2( 180, 120 )
+mouse_filter = 2
+
+[node name="Label" type="Label" parent="CanvasLayer/MarginContainer/VBoxContainer/HBoxContainer2/PanelContainer2"]
+margin_left = 7.0
+margin_top = 7.0
+margin_right = 102.0
+margin_bottom = 82.0
+text = "Build palette
+Options
+etc."

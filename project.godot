@@ -1,0 +1,227 @@
+; Engine configuration file.
+; It's best edited using the editor UI and not directly,
+; since the parameters that go here are not all obvious.
+;
+; Format:
+;   [section] ; section goes between []
+;   param=value ; assign values to parameters
+
+config_version=4
+
+_global_script_classes=[ {
+"base": "Node2D",
+"class": "Arm",
+"language": "GDScript",
+"path": "res://scenes/tests/tentacle_driver.gd"
+}, {
+"base": "Object",
+"class": "DialogPlanner",
+"language": "GDScript",
+"path": "res://scenes/tests/DialogPlanner.gd"
+}, {
+"base": "MarginContainer",
+"class": "DialogPlannerStructRenderer",
+"language": "GDScript",
+"path": "res://scenes/tests/DialogPlannerStructRenderer.gd"
+}, {
+"base": "Control",
+"class": "DialogPlanner_",
+"language": "GDScript",
+"path": "res://scenes/tests/DialogPlanner_.gd"
+}, {
+"base": "TileMap",
+"class": "DualTileMap",
+"language": "GDScript",
+"path": "res://shared/DualTileMap.gd"
+}, {
+"base": "Label",
+"class": "FPSLabel",
+"language": "GDScript",
+"path": "res://FPSLabel.gd"
+}, {
+"base": "Gradient",
+"class": "FancyGradient",
+"language": "GDScript",
+"path": "res://addons/FancyGradient/FancyGradient.gd"
+}, {
+"base": "Sprite",
+"class": "HandCard",
+"language": "GDScript",
+"path": "res://prefabs/HandCard.gd"
+}, {
+"base": "Object",
+"class": "HexHelpers",
+"language": "GDScript",
+"path": "res://shared/HexHelpers.gd"
+}, {
+"base": "Object",
+"class": "LibJV",
+"language": "GDScript",
+"path": "res://shared/LibJV.gd"
+}, {
+"base": "Spatial",
+"class": "MachineBase",
+"language": "GDScript",
+"path": "res://scenes/hell/Machine.gd"
+}, {
+"base": "Polygon2D",
+"class": "Polygon2DArmatureAnimator",
+"language": "GDScript",
+"path": "res://addons/PolygonFromSprite/Polygon2DArmatureAnimator.gd"
+}, {
+"base": "Node2D",
+"class": "RaccoonAnimation",
+"language": "GDScript",
+"path": "res://prefabs/AnimatedSprite.gd"
+}, {
+"base": "Gradient",
+"class": "RepeatingGradient",
+"language": "GDScript",
+"path": "res://addons/FancyGradient/RepeatingGradient.gd"
+}, {
+"base": "Reference",
+"class": "SceneData",
+"language": "GDScript",
+"path": "res://shared/game/scenes/scene-data.gd"
+}, {
+"base": "Node",
+"class": "Scenes",
+"language": "GDScript",
+"path": "res://shared/game/scenes.gd"
+}, {
+"base": "Resource",
+"class": "Settings",
+"language": "GDScript",
+"path": "res://shared/game/Settings.gd"
+}, {
+"base": "CanvasLayer",
+"class": "Transition",
+"language": "GDScript",
+"path": "res://shared/game/transition/transition.gd"
+}, {
+"base": "Resource",
+"class": "UserSettings",
+"language": "GDScript",
+"path": "res://shared/game/UserSettings.gd"
+} ]
+_global_script_class_icons={
+"Arm": "",
+"DialogPlanner": "",
+"DialogPlannerStructRenderer": "",
+"DialogPlanner_": "",
+"DualTileMap": "",
+"FPSLabel": "",
+"FancyGradient": "",
+"HandCard": "",
+"HexHelpers": "",
+"LibJV": "",
+"MachineBase": "",
+"Polygon2DArmatureAnimator": "",
+"RaccoonAnimation": "",
+"RepeatingGradient": "",
+"SceneData": "",
+"Scenes": "",
+"Settings": "",
+"Transition": "",
+"UserSettings": ""
+}
+
+[application]
+
+config/name="Heck Tech"
+run/main_scene="res://scenes/menu/menu.tscn"
+boot_splash/image="res://assets/splash.png"
+config/icon="res://assets/hell/title/icon.png"
+
+[autoload]
+
+Game="*res://shared/game/game.gd"
+GameServices="*res://shared/GameServices.gd"
+GameManager="*res://prefabs/GameManager.gd"
+
+[category]
+
+property_name=1
+
+[display]
+
+window/size/width=1280
+window/size/height=720
+window/dpi/allow_hidpi=true
+window/stretch/mode="2d"
+window/stretch/aspect="keep"
+
+[editor_plugins]
+
+enabled=PoolStringArray( "res://addons/AutoExportVersion/plugin.cfg", "res://addons/PolygonFromSprite/plugin.cfg" )
+
+[gui]
+
+theme/custom="res://assets/ui-theme.tres"
+
+[input]
+
+pause={
+"deadzone": 0.5,
+"events": [ Object(InputEventJoypadButton,"resource_local_to_scene":false,"resource_name":"","device":-1,"button_index":11,"pressure":0.0,"pressed":false,"script":null)
+, Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":0,"alt":false,"shift":false,"control":false,"meta":false,"command":false,"pressed":false,"scancode":16777217,"physical_scancode":0,"unicode":0,"echo":false,"script":null)
+ ]
+}
+move_left={
+"deadzone": 0.5,
+"events": [ Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":0,"alt":false,"shift":false,"control":false,"meta":false,"command":false,"pressed":false,"scancode":65,"physical_scancode":0,"unicode":0,"echo":false,"script":null)
+, Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":0,"alt":false,"shift":false,"control":false,"meta":false,"command":false,"pressed":false,"scancode":16777231,"physical_scancode":0,"unicode":0,"echo":false,"script":null)
+ ]
+}
+move_right={
+"deadzone": 0.5,
+"events": [ Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":0,"alt":false,"shift":false,"control":false,"meta":false,"command":false,"pressed":false,"scancode":68,"physical_scancode":0,"unicode":0,"echo":false,"script":null)
+, Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":0,"alt":false,"shift":false,"control":false,"meta":false,"command":false,"pressed":false,"scancode":16777233,"physical_scancode":0,"unicode":0,"echo":false,"script":null)
+ ]
+}
+move_up={
+"deadzone": 0.5,
+"events": [ Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":0,"alt":false,"shift":false,"control":false,"meta":false,"command":false,"pressed":false,"scancode":87,"physical_scancode":0,"unicode":0,"echo":false,"script":null)
+, Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":0,"alt":false,"shift":false,"control":false,"meta":false,"command":false,"pressed":false,"scancode":16777232,"physical_scancode":0,"unicode":0,"echo":false,"script":null)
+ ]
+}
+move_down={
+"deadzone": 0.5,
+"events": [ Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":0,"alt":false,"shift":false,"control":false,"meta":false,"command":false,"pressed":false,"scancode":83,"physical_scancode":0,"unicode":0,"echo":false,"script":null)
+, Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":0,"alt":false,"shift":false,"control":false,"meta":false,"command":false,"pressed":false,"scancode":16777234,"physical_scancode":0,"unicode":0,"echo":false,"script":null)
+ ]
+}
+do_a={
+"deadzone": 0.5,
+"events": [ Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":0,"alt":false,"shift":false,"control":false,"meta":false,"command":false,"pressed":false,"scancode":67,"physical_scancode":0,"unicode":0,"echo":false,"script":null)
+, Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":0,"alt":false,"shift":false,"control":false,"meta":false,"command":false,"pressed":false,"scancode":32,"physical_scancode":0,"unicode":0,"echo":false,"script":null)
+, Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":0,"alt":false,"shift":false,"control":false,"meta":false,"command":false,"pressed":false,"scancode":16777221,"physical_scancode":0,"unicode":0,"echo":false,"script":null)
+, Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":0,"alt":false,"shift":false,"control":false,"meta":false,"command":false,"pressed":false,"scancode":74,"physical_scancode":0,"unicode":0,"echo":false,"script":null)
+, Object(InputEventMouseButton,"resource_local_to_scene":false,"resource_name":"","device":-1,"alt":false,"shift":false,"control":false,"meta":false,"command":false,"button_mask":0,"position":Vector2( 0, 0 ),"global_position":Vector2( 0, 0 ),"factor":1.0,"button_index":1,"canceled":false,"pressed":false,"doubleclick":false,"script":null)
+ ]
+}
+do_b={
+"deadzone": 0.5,
+"events": [ Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":0,"alt":false,"shift":false,"control":false,"meta":false,"command":false,"pressed":false,"scancode":88,"physical_scancode":0,"unicode":0,"echo":false,"script":null)
+, Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":0,"alt":false,"shift":false,"control":false,"meta":false,"command":false,"pressed":false,"scancode":75,"physical_scancode":0,"unicode":0,"echo":false,"script":null)
+, Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":0,"alt":false,"shift":false,"control":false,"meta":false,"command":false,"pressed":false,"scancode":16777238,"physical_scancode":0,"unicode":0,"echo":false,"script":null)
+, Object(InputEventMouseButton,"resource_local_to_scene":false,"resource_name":"","device":-1,"alt":false,"shift":false,"control":false,"meta":false,"command":false,"button_mask":0,"position":Vector2( 0, 0 ),"global_position":Vector2( 0, 0 ),"factor":1.0,"button_index":2,"canceled":false,"pressed":false,"doubleclick":false,"script":null)
+ ]
+}
+do_c={
+"deadzone": 0.5,
+"events": [ Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":0,"alt":false,"shift":false,"control":false,"meta":false,"command":false,"pressed":false,"scancode":90,"physical_scancode":0,"unicode":0,"echo":false,"script":null)
+, Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":0,"alt":false,"shift":false,"control":false,"meta":false,"command":false,"pressed":false,"scancode":76,"physical_scancode":0,"unicode":0,"echo":false,"script":null)
+, Object(InputEventMouseButton,"resource_local_to_scene":false,"resource_name":"","device":-1,"alt":false,"shift":false,"control":false,"meta":false,"command":false,"button_mask":0,"position":Vector2( 0, 0 ),"global_position":Vector2( 0, 0 ),"factor":1.0,"button_index":3,"canceled":false,"pressed":false,"doubleclick":false,"script":null)
+, Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":0,"alt":false,"shift":false,"control":false,"meta":false,"command":false,"pressed":false,"scancode":16777237,"physical_scancode":0,"unicode":0,"echo":false,"script":null)
+ ]
+}
+
+[layer_names]
+
+2d_physics/layer_1="Obstacles"
+2d_physics/layer_2="Lasers"
+2d_physics/layer_3="Player"
+2d_physics/layer_4="Enemies"
+2d_physics/layer_5="PlayerProjectiles"
+2d_physics/layer_6="EnemyProjectiles"

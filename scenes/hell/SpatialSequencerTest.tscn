@@ -1,0 +1,152 @@
+[gd_scene load_steps=25 format=2]
+
+[ext_resource path="res://assets/hell/ghost0004.png" type="Texture" id=1]
+[ext_resource path="res://assets/hell/ghost0005.png" type="Texture" id=2]
+[ext_resource path="res://assets/hell/ghost0003.png" type="Texture" id=3]
+[ext_resource path="res://assets/hell/ghost0002.png" type="Texture" id=4]
+[ext_resource path="res://assets/hell/ghost0001.png" type="Texture" id=5]
+[ext_resource path="res://assets/hell/ghost0011.png" type="Texture" id=6]
+[ext_resource path="res://assets/hell/ghost0010.png" type="Texture" id=7]
+[ext_resource path="res://assets/hell/ghost0009.png" type="Texture" id=8]
+[ext_resource path="res://assets/hell/ghost0008.png" type="Texture" id=9]
+[ext_resource path="res://assets/hell/ghost0006.png" type="Texture" id=10]
+[ext_resource path="res://assets/hell/ghost0007.png" type="Texture" id=11]
+[ext_resource path="res://assets/hell/ghost0012.png" type="Texture" id=12]
+[ext_resource path="res://assets/sprites/shapes/Circle.png" type="Texture" id=13]
+[ext_resource path="res://scenes/hell/SpatialSequencerTest.gd" type="Script" id=14]
+[ext_resource path="res://assets/hell/bloodhammer.png" type="Texture" id=15]
+[ext_resource path="res://scenes/hell/Hammer3D.gd" type="Script" id=16]
+[ext_resource path="res://assets/hell/bloodhammer_normal.png" type="Texture" id=17]
+
+[sub_resource type="SpatialMaterial" id=3]
+albedo_color = Color( 0.741176, 0.286275, 0.282353, 1 )
+
+[sub_resource type="PlaneMesh" id=1]
+material = SubResource( 3 )
+size = Vector2( 1000, 1000 )
+
+[sub_resource type="Environment" id=2]
+ambient_light_color = Color( 0.670588, 0.670588, 0.670588, 1 )
+ambient_light_energy = 0.5
+glow_intensity = 1.0
+glow_bloom = 0.12
+glow_blend_mode = 0
+glow_bicubic_upscale = true
+
+[sub_resource type="SpatialMaterial" id=5]
+albedo_color = Color( 1, 0.4, 0.356863, 1 )
+
+[sub_resource type="CubeMesh" id=4]
+material = SubResource( 5 )
+size = Vector3( 100, 1, 2 )
+
+[sub_resource type="SpriteFrames" id=6]
+animations = [ {
+"frames": [ ExtResource( 5 ), ExtResource( 4 ), ExtResource( 3 ), ExtResource( 1 ), ExtResource( 2 ), ExtResource( 10 ), ExtResource( 11 ), ExtResource( 9 ), ExtResource( 8 ), ExtResource( 7 ), ExtResource( 6 ), ExtResource( 12 ) ],
+"loop": true,
+"name": "default",
+"speed": 12.0
+} ]
+
+[sub_resource type="SpatialMaterial" id=7]
+flags_transparent = true
+params_cull_mode = 2
+albedo_texture = ExtResource( 15 )
+metallic = 0.37
+metallic_specular = 0.41
+roughness = 0.32
+normal_enabled = true
+normal_scale = -3.26
+normal_texture = ExtResource( 17 )
+
+[node name="SpatialConveyors" type="Spatial"]
+script = ExtResource( 14 )
+
+[node name="Plane" type="MeshInstance" parent="."]
+mesh = SubResource( 1 )
+skeleton = NodePath("../WorldEnvironment")
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource( 2 )
+
+[node name="Camera" type="Camera" parent="."]
+transform = Transform( 1, 0, 0, 0, 0.982958, 0.183831, 0, -0.183831, 0.982958, 0, 3.96534, 10.1435 )
+fov = 35.0
+
+[node name="Conveyor" type="MeshInstance" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0 )
+mesh = SubResource( 4 )
+
+[node name="Spirit" type="Spatial" parent="Conveyor"]
+transform = Transform( 0.25, 0, 0, 0, 0.25, 0, 0, 0, 0.25, 0, 0.75, 0.5 )
+visible = false
+
+[node name="Sprite3D" type="Sprite3D" parent="Conveyor/Spirit"]
+transform = Transform( 0.654779, 0, 0, 0, 0.654779, 0, 0, 0, 1, 0.0451832, -0.135552, 0 )
+modulate = Color( 2, 2, 2, 1 )
+shaded = true
+alpha_cut = 2
+texture = ExtResource( 13 )
+
+[node name="AnimatedSprite3D" type="AnimatedSprite3D" parent="Conveyor/Spirit"]
+transform = Transform( 2, 0, 0, 0, 2, 0, 0, 0, 2, -0.5648, 0.768127, 0.162891 )
+frames = SubResource( 6 )
+playing = true
+
+[node name="Spirit" type="Spatial" parent="."]
+transform = Transform( 0.25, 0, 0, 0, 0.25, 0, 0, 0, 0.25, 0, 1.5, 0.5 )
+
+[node name="Sprite3D" type="Sprite3D" parent="Spirit"]
+transform = Transform( 0.654779, 0, 0, 0, 0.654779, 0, 0, 0, 1, 0.0451832, -0.135552, 0 )
+modulate = Color( 2, 2, 2, 1 )
+shaded = true
+alpha_cut = 2
+texture = ExtResource( 13 )
+
+[node name="AnimatedSprite3D" type="AnimatedSprite3D" parent="Spirit"]
+transform = Transform( 2, 0, 0, 0, 2, 0, 0, 0, 2, -0.5648, 0.768127, 0.162891 )
+frames = SubResource( 6 )
+playing = true
+
+[node name="OmniLight" type="OmniLight" parent="Spirit"]
+omni_range = 0.5
+
+[node name="Sprite3D2" type="Sprite3D" parent="."]
+transform = Transform( 0.0377396, -0.431365, -0.25, 0.498097, 0.0435779, 0, 0.021789, -0.249049, 0.433013, 2.27041, 2.27575, 0.42407 )
+material_override = SubResource( 7 )
+shaded = true
+texture = ExtResource( 15 )
+
+[node name="Sprite3D3" type="Sprite3D" parent="."]
+transform = Transform( -0.0308142, 0.352208, -0.353553, 0.498097, 0.0435779, 0, 0.0308142, -0.352208, -0.353553, -1.72959, 2.27575, 0.42407 )
+material_override = SubResource( 7 )
+shaded = true
+texture = ExtResource( 15 )
+
+[node name="Sprite3D4" type="Sprite3D" parent="."]
+transform = Transform( 0.0377396, -0.431365, -0.25, 0.498097, 0.0435779, 0, 0.021789, -0.249049, 0.433013, 2.27041, 4.27575, 0.42407 )
+material_override = SubResource( 7 )
+shaded = true
+texture = ExtResource( 15 )
+
+[node name="Sprite3D5" type="Sprite3D" parent="."]
+transform = Transform( -0.0308142, 0.352208, -0.353553, 0.498097, 0.0435779, 0, 0.0308142, -0.352208, -0.353553, -1.72959, 4.27575, 0.42407 )
+material_override = SubResource( 7 )
+shaded = true
+texture = ExtResource( 15 )
+
+[node name="Hammer" type="Spatial" parent="."]
+transform = Transform( 0.433013, 0, -0.25, 0, 0.5, 0, 0.25, 0, 0.433013, 3, 1, 2 )
+script = ExtResource( 16 )
+
+[node name="Hammer" type="Spatial" parent="Hammer"]
+
+[node name="OmniLight" type="OmniLight" parent="Hammer/Hammer"]
+transform = Transform( 1.73205, 0, 1, 0, 2, 0, -1, 0, 1.73205, -2.60161, 7.06958, -0.506119 )
+light_color = Color( 0.741176, 0.286275, 0.282353, 1 )
+shadow_enabled = true
+
+[node name="Sprite3D" type="Sprite3D" parent="Hammer/Hammer"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 6.3278, 0 )
+shaded = true
+texture = ExtResource( 15 )
