@@ -68,11 +68,11 @@ albedo_color = Color( 1, 1, 1, 0.25098 )
 material = SubResource( 9 )
 size = Vector3( 1, 1, 1 )
 
-[sub_resource type="SpatialMaterial" id=16]
+[sub_resource type="SpatialMaterial" id=18]
 albedo_color = Color( 0.529412, 0.564706, 0.623529, 1 )
 
 [sub_resource type="CapsuleMesh" id=17]
-material = SubResource( 16 )
+material = SubResource( 18 )
 radius = 0.45
 
 [node name="FartMachine" type="Spatial"]

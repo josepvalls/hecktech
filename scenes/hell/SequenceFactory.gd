@@ -112,7 +112,9 @@ func _ready() -> void:
 	$"%EraseBuildButton".disabled = true
 	GameManager.connect("player_on_stream_finished", self, "playback_finished")
 	for i in GameManager.track_num:
-		get_node("Tracks/SoulMover" + str(i+1)).food_destination = $"%BigPlate"
+		var mover = get_node("Tracks/SoulMover" + str(i+1))
+		mover.food_destination = $"%BigPlate"
+		GameManager.connect("torture", mover, "torture")
 	GameManager.connect("update_ui_needed", self, "update_ui")
 	GameManager.connect("new_score", self, "new_score")
 	update_ui()

@@ -69,7 +69,7 @@ var current_tracks_active = 0
 var score_count := [0,0,0,0]
 func score_soul(track: Spatial):
 	score_count[track.track]+=1
-	prints("score_soul score_count", score_count)
+	#prints("score_soul score_count", score_count)
 	
 	var food = preload("res://prefabs/Food.tscn").instance()
 	var m = GameManager.get_machines_in_track(track.track)
@@ -182,6 +182,8 @@ func process_beat():
 		current_beat = current_beat_
 		beat()
 
+signal torture(coords, kind)
+
 var playing_queue = []
 func beat():
 	var beat_mod = current_beat % track_length
@@ -195,6 +197,7 @@ func beat():
 		if i.y < current_tracks_active and i.x == beat_mod:
 			track_slots[i].beat(beat_mod)
 			if not track_slots[i].is_placeholder():
+				emit_signal("torture", i, track_slots[i].kind)
 				playing_queue.append([track_slots[i], track_slots[i].size])
 	for i in other_slots:
 		if i[0].y < current_tracks_active and i[0].x == beat_mod:

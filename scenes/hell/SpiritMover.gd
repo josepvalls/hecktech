@@ -37,3 +37,22 @@ func move():
 		position.x = -8
 		
 	
+func torture(coords: Vector2, kind: int):
+	if coords.y == track:
+		match kind:
+			1:
+				$Soul.play("stab")
+			2:
+				$Soul.play("burn")
+			3:
+				$Soul.play("eel")
+			4:
+				$Soul.play("eel")
+			5:
+				$Soul.play("smash")
+			6:
+				$Soul.play("smash")
+			7:
+				$Soul.play("stab")
+			_:
+				pass
