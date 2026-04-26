@@ -6,15 +6,13 @@ export var disable_leaderboard := false
 func _ready():
 	$"%PlayButton".grab_focus() # needed for gamepads to work
 	$"%PlayButton".connect("pressed", self, "_on_PlayButton_pressed", ["res://scenes/hell/SequencerFactory3.tscn", true])
-	$"%PlayButton2".connect("pressed", self, "_on_PlayButton_pressed", ["res://scenes/gameplay/cards_legacy.tscn", false])
-	$"%PlayButton3".connect("pressed", self, "_on_PlayButton_pressed", ["res://scenes/gameplay/map.tscn", false])
-	$"%SettingsButton".connect("pressed", self, "_on_SettingsButton_pressed", [true])
-	$"%InstructionsButton".connect("pressed", self, "_on_InstructionsButton_pressed", [true])
-	$"%CloseInstructions".connect("pressed", self, "_on_InstructionsButton_pressed", [false])
-	$"%CloseSettings".connect("pressed", self, "_on_SettingsButton_pressed", [false])
-	$"%ExitButton".connect("pressed", self, "_on_ExitButton_pressed")
-	$"%CloseLeaderboard".connect("pressed", $LeaderboardLayer, "hide")
-	$"%LeaderboardButton".connect("pressed", $LeaderboardLayer, "show")
+	#$"%SettingsButton".connect("pressed", self, "_on_SettingsButton_pressed", [true])
+	#$"%InstructionsButton".connect("pressed", self, "_on_InstructionsButton_pressed", [true])
+	#$"%CloseInstructions".connect("pressed", self, "_on_InstructionsButton_pressed", [false])
+	#$"%CloseSettings".connect("pressed", self, "_on_SettingsButton_pressed", [false])
+	#$"%ExitButton".connect("pressed", self, "_on_ExitButton_pressed")
+	#$"%CloseLeaderboard".connect("pressed", $LeaderboardLayer, "hide")
+	#$"%LeaderboardButton".connect("pressed", $LeaderboardLayer, "show")
 	
 	prints(GameServices.user_data.player_name.strip_edges(), GameServices.user_data.player_name.strip_edges() == "Anonymous")
 	if GameServices.user_data.player_name.strip_edges() == "Anonymous":
@@ -28,8 +26,8 @@ func _ready():
 		$"%PlayButton3".queue_free()
 		
 	$AudioStreamPlayerSFX.connect("finished", self, "play_sfx")
-	$SettingsLayer.hide()
-	$LeaderboardLayer.hide()
+	#$SettingsLayer.hide()
+	#$LeaderboardLayer.hide()
 	var version = load("res://version.gd").VERSION
 	$Credits/Developer.text += "\nv." + str(version)
 	play_sfx()
@@ -72,6 +70,7 @@ func _on_InstructionsButton_pressed(visibility: bool) -> void:
 	$InstructionsLayers.visible = visibility
 
 func _on_PlayButton_pressed(scene, tutorial) -> void:
+	sfx_playing = false
 	var params = {
 		show_progress_bar = true,
 		"tutorial": tutorial,
