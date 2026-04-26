@@ -45,12 +45,12 @@ func _ready():
 	player.connect("finished",self, "player_on_stream_finished")
 	player.bus = "Music"
 	
-func play(track: String, reset_tracks=true):
+func play(track: AudioStream, reset_tracks=true):
 	current_pre_beat = -1
 	current_beat = -1
 	if reset_tracks:
 		current_tracks_active = 0
-	player.stream = load(track)
+	player.stream = track#load(track)
 	player.play()
 	playing = true
 	

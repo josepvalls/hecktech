@@ -1,4 +1,4 @@
-[gd_scene load_steps=60 format=2]
+[gd_scene load_steps=63 format=2]
 
 [ext_resource path="res://scenes/hell/Hammer3D.gd" type="Script" id=1]
 [ext_resource path="res://scenes/hell/Machine.gd" type="Script" id=2]
@@ -25,6 +25,7 @@
 [ext_resource path="res://assets/sprites/hell/bg_1.png" type="Texture" id=23]
 [ext_resource path="res://assets/sprites/hell/river-bottomlayer.png" type="Texture" id=24]
 [ext_resource path="res://assets/sprites/coin1.png" type="Texture" id=25]
+[ext_resource path="res://assets/sprites/hell/gears/gear2.png" type="Texture" id=26]
 [ext_resource path="res://prefabs/machine_theme.tres" type="Theme" id=27]
 [ext_resource path="res://assets/fonts/JollyLodger-Regular.ttf" type="DynamicFontData" id=28]
 [ext_resource path="res://shared/materials/colorizer_sample.tres" type="Material" id=29]
@@ -32,6 +33,8 @@
 [ext_resource path="res://assets/sprites/hell/large demon plate/hellplate_A2.png" type="Texture" id=31]
 [ext_resource path="res://scenes/hell/OmniLightCrackle.gd" type="Script" id=32]
 [ext_resource path="res://scenes/hell/GlowModulate.gd" type="Script" id=33]
+[ext_resource path="res://assets/sprites/hell/gears/gear1.png" type="Texture" id=34]
+[ext_resource path="res://assets/sprites/hell/gears/gear3.png" type="Texture" id=35]
 
 [sub_resource type="Shader" id=37]
 code = "shader_type spatial;
@@ -507,25 +510,40 @@ margin_bottom = 70.0
 mouse_filter = 2
 
 [node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer/UIMarginContainer/VBoxContainer/HBoxContainer"]
-margin_right = 151.0
+margin_right = 231.0
 margin_bottom = 70.0
 
 [node name="HBoxContainer" type="HBoxContainer" parent="CanvasLayer/UIMarginContainer/VBoxContainer/HBoxContainer/VBoxContainer"]
-margin_right = 151.0
+margin_right = 231.0
 margin_bottom = 70.0
 alignment = 2
 
-[node name="TextureRect" type="TextureRect" parent="CanvasLayer/UIMarginContainer/VBoxContainer/HBoxContainer/VBoxContainer/HBoxContainer"]
-margin_right = 64.0
+[node name="TrackProgress" type="TextureProgress" parent="CanvasLayer/UIMarginContainer/VBoxContainer/HBoxContainer/VBoxContainer/HBoxContainer"]
+unique_name_in_owner = true
+margin_right = 70.0
 margin_bottom = 70.0
-rect_min_size = Vector2( 64, 64 )
+rect_min_size = Vector2( 70, 70 )
+max_value = 50.0
+value = 10.0
+texture_under = ExtResource( 35 )
+texture_over = ExtResource( 26 )
+texture_progress = ExtResource( 34 )
+fill_mode = 4
+tint_under = Color( 1, 0.321569, 0.0196078, 1 )
+nine_patch_stretch = true
+
+[node name="TextureRect" type="TextureRect" parent="CanvasLayer/UIMarginContainer/VBoxContainer/HBoxContainer/VBoxContainer/HBoxContainer"]
+margin_left = 74.0
+margin_right = 144.0
+margin_bottom = 70.0
+rect_min_size = Vector2( 70, 70 )
 texture = ExtResource( 25 )
 expand = true
 
 [node name="CurrencyLabel_" type="Label" parent="CanvasLayer/UIMarginContainer/VBoxContainer/HBoxContainer/VBoxContainer/HBoxContainer"]
 unique_name_in_owner = true
-margin_left = 68.0
-margin_right = 84.0
+margin_left = 148.0
+margin_right = 164.0
 margin_bottom = 70.0
 custom_colors/font_color = Color( 0.984314, 0.654902, 0.00392157, 1 )
 custom_fonts/font = SubResource( 45 )
@@ -533,8 +551,8 @@ text = "x"
 
 [node name="CurrencyLabel" type="Label" parent="CanvasLayer/UIMarginContainer/VBoxContainer/HBoxContainer/VBoxContainer/HBoxContainer"]
 unique_name_in_owner = true
-margin_left = 88.0
-margin_right = 151.0
+margin_left = 168.0
+margin_right = 231.0
 margin_bottom = 70.0
 custom_colors/font_color = Color( 0.984314, 0.654902, 0.00392157, 1 )
 custom_fonts/font = SubResource( 45 )
@@ -558,7 +576,7 @@ Stats
 etc."
 
 [node name="VSeparator" type="VSeparator" parent="CanvasLayer/UIMarginContainer/VBoxContainer/HBoxContainer"]
-margin_left = 155.0
+margin_left = 235.0
 margin_right = 1180.0
 margin_bottom = 70.0
 mouse_filter = 2
@@ -727,6 +745,7 @@ Options
 etc."
 
 [node name="DialogCanvasLayer" type="CanvasLayer" parent="."]
+visible = false
 script = ExtResource( 8 )
 
 [node name="SceneFrame" type="Sprite" parent="DialogCanvasLayer"]

@@ -157,7 +157,7 @@ func can_build():
 
 func update_ui():
 	$"%PlayStopButton".disabled = not can_play_machine()
-	$"%EraseBuildButton".disabled = not can_play_machine()
+	$"%EraseBuildButton".disabled = not len(GameManager.track_machines)>0
 	$"%UnlockTrackButton".disabled = not can_buy_tracks()
 	$"%EraseBuildButton".disabled = not can_play_machine()	
 	$"%CurrencyLabel".text = str(GameManager.current_currency)
@@ -169,6 +169,7 @@ func update_ui():
 
 func pre_start(params):
 	select_size(0,0)
+	$"%TrackProgress".value = 0.0
 	var cur_scene: Node = get_tree().current_scene
 	print("Current scene is: ", cur_scene.name, " (", cur_scene.filename, ")")
 
@@ -186,15 +187,21 @@ func start():
 	#GameManager.play("res://assets/bgm/Kit01_140_Full_Mix_D#.wav")
 
 func do_play_stop():
+	var stream = load("res://assets/sfx/Stems/SHARP_PS_Kit01_140_Vocal_Stem_Chop_D#.wav") as AudioStream
 	if debug_unlock_tracks:
 		GameManager.current_tracks_active = 4
-		GameManager.play("res://assets/sfx/Stems/SHARP_PS_Kit01_140_Vocal_Stem_Chop_D#.wav", false)
+		GameManager.play(stream, false)
 	else:
-		GameManager.play("res://assets/sfx/Stems/SHARP_PS_Kit01_140_Vocal_Stem_Chop_D#.wav")
+		GameManager.play(stream)
 	$Tracks/SoulMover1/Soul.show()
 	for i in [$Tracks/SoulMover1, $Tracks/SoulMover2, $Tracks/SoulMover3, $Tracks/SoulMover4]:
 		i.reset()
 	$"%PlayStopButton".disabled = true
+	$"%TrackProgress".value = 0.5
+	$"%TrackProgress".max_value = stream.get_length()
+	var tween = create_tween()
+	#prints("do_play_stop", stream.get_length())
+	tween.tween_property($"%TrackProgress", "value", stream.get_length(), stream.get_length()).from(0.0)
 	
 
 var current_track_coords = Vector2.ZERO
