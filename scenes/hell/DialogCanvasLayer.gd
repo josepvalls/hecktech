@@ -51,13 +51,13 @@ func _process(delta: float) -> void:
 
 func lines():
 	return """Satan	IIIIIIIIMPS!!!	1		Devil Open/1.ogg
-Baldrick & Boris	Yes, sir?	3		Imps/1.ogg
+Bruno & Boris & Baldrick	Yes, sir?	3		Imps/1.ogg
 Satan	THESE SOULS ARE RAW!!!	5		Devil Open/2.ogg
 Satan	Do you expect me to consume these unabused, untormented, unpunished souls!?	7		Devil Open/3.ogg
 Satan	Look at this one. It still has its original hope intact. It's practically organic!	9		Devil Open/4.ogg
 Satan	This is it, you useless slaves. You are all fired!!!	11		Devil Open/5.ogg
 Baldrick	But sir! We've been tormenting like this for millennia. It's hand-crafted suffering!	13		Imps/2.ogg
-Boris	We provide artisan, small-batch damnation!	13		Imps/4.ogg
+Baldrick	We provide artisan, small-batch damnation!	13		Imps/4.ogg
 Satan	I am surrounded by idiots...	15		Devil Open/6.ogg
 Satan	Artisan is just a marketing term for "inefficient" you useless skin-sacks.	15		Devil Open/7.ogg
 Satan	It's not the dark ages any more. The humans are years ahead of us in terms of automation.	17		Devil Open/8.ogg
@@ -66,4 +66,4 @@ Satan	And what're we using? Pitchforks? Hellfire? How retro. How... pathetic.	25
 Satan	It's time to get onboard with the current times.	27		Devil Open/11.ogg
 Satan	I will build the ultimate torturing machine.	29		Devil Open/12.ogg
 Satan	IIIIMPS, GET TO WORK!	31		Devil Open/13c.ogg
-Baldrick & Boris	Yes, sir!	33		Imps/5.ogg""".split("\n")
+Bruno & Boris & Baldrick	Yes, sir!	33		Imps/5.ogg""".split("\n")
