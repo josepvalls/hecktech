@@ -352,10 +352,10 @@ rect_min_size = Vector2( 300, 340 )
 custom_styles/panel = SubResource( 20 )
 
 [node name="VBoxOptions" type="VBoxContainer" parent="SettingsLayer/CenterContainer"]
-margin_left = 545.0
-margin_top = 220.0
-margin_right = 735.0
-margin_bottom = 499.0
+margin_left = 574.0
+margin_top = 230.0
+margin_right = 705.0
+margin_bottom = 489.0
 custom_constants/separation = 20
 alignment = 1
 

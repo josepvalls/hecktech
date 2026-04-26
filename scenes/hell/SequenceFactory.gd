@@ -47,13 +47,13 @@ var kind_to_base_cost = {
 }
 
 var kind_to_size = {
-	KIND.STAB: [1,2],
-	KIND.BURN: [1,2],
+	KIND.STAB: [1],
+	KIND.BURN: [1],
 	KIND.EEL: [4],
 	KIND.FART: [4],
-	KIND.HAMMER: [1,2],
+	KIND.HAMMER: [1],
 	KIND.FROST: [2,4],	
-	KIND.SAW: [1,2],	
+	KIND.SAW: [1],	
 }
 var size_to_label = {
 	1: "x1",
@@ -157,9 +157,8 @@ func can_build():
 
 func update_ui():
 	$"%PlayStopButton".disabled = not can_play_machine()
-	$"%EraseBuildButton".disabled = not len(GameManager.track_machines)>0
+	$"%EraseBuildButton".disabled = len(GameManager.track_machines)==0
 	$"%UnlockTrackButton".disabled = not can_buy_tracks()
-	$"%EraseBuildButton".disabled = not can_play_machine()	
 	$"%CurrencyLabel".text = str(GameManager.current_currency)
 	if can_build():
 		for i in buttons:

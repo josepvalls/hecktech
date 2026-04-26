@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=2]
+[gd_scene load_steps=12 format=2]
 
 [ext_resource path="res://assets/sfx/FL_CT_Kit3_140BPM_D#min/FL_CT_Kit3_140BPM_One_Shots/h0.wav" type="AudioStream" id=1]
 [ext_resource path="res://assets/sprites/shapes/Circle.png" type="Texture" id=2]
@@ -27,6 +27,13 @@ albedo_color = Color( 1, 1, 1, 0.25098 )
 [sub_resource type="CubeMesh" id=1]
 material = SubResource( 6 )
 size = Vector3( 1, 1, 1 )
+
+[sub_resource type="SpatialMaterial" id=7]
+albedo_color = Color( 0.529412, 0.564706, 0.623529, 1 )
+
+[sub_resource type="CapsuleMesh" id=8]
+material = SubResource( 7 )
+radius = 0.45
 
 [node name="GutMachine" type="Spatial"]
 script = ExtResource( 5 )
@@ -60,3 +67,7 @@ texture = ExtResource( 2 )
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0 )
 visible = false
 mesh = SubResource( 1 )
+
+[node name="HintMeshInstance2" type="MeshInstance" parent="."]
+transform = Transform( 1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 0.5, -1.5 )
+mesh = SubResource( 8 )

@@ -1,4 +1,4 @@
-[gd_scene load_steps=18 format=2]
+[gd_scene load_steps=20 format=2]
 
 [ext_resource path="res://prefabs/FartMachine.gd" type="Script" id=1]
 [ext_resource path="res://assets/sprites/shapes/Circle_small.png" type="Texture" id=2]
@@ -68,6 +68,13 @@ albedo_color = Color( 1, 1, 1, 0.25098 )
 material = SubResource( 9 )
 size = Vector3( 1, 1, 1 )
 
+[sub_resource type="SpatialMaterial" id=16]
+albedo_color = Color( 0.529412, 0.564706, 0.623529, 1 )
+
+[sub_resource type="CapsuleMesh" id=17]
+material = SubResource( 16 )
+radius = 0.45
+
 [node name="FartMachine" type="Spatial"]
 script = ExtResource( 1 )
 sound = ExtResource( 3 )
@@ -109,3 +116,19 @@ texture = ExtResource( 4 )
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0 )
 visible = false
 mesh = SubResource( 10 )
+
+[node name="HintMeshInstance2" type="MeshInstance" parent="."]
+transform = Transform( 1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 0.5, -1.5 )
+mesh = SubResource( 17 )
+
+[node name="HintMeshInstance3" type="MeshInstance" parent="."]
+transform = Transform( 1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 1, 0.5, -1.5 )
+mesh = SubResource( 17 )
+
+[node name="HintMeshInstance4" type="MeshInstance" parent="."]
+transform = Transform( 1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 2, 0.5, -1.5 )
+mesh = SubResource( 17 )
+
+[node name="HintMeshInstance5" type="MeshInstance" parent="."]
+transform = Transform( 1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 3, 0.5, -1.5 )
+mesh = SubResource( 17 )
